@@ -2,9 +2,9 @@ const menuBtn = document.querySelector('.menu-btn');
 const navLinks = document.querySelector('.nav-links');
 const typingText = document.getElementById('typing');
 const projectCard = document.querySelector('.project-card.upload-card');
-const uploadButton = document.querySelector('.upload-form .btn');
-const fileInput = document.getElementById('project-file');
-const projectList = document.querySelector('.project-list');
+const addProjectButton = document.querySelector('.btn-add-project');
+const projectForm = document.querySelector('.project-form');
+const sendEmailButton = document.querySelector('.btn-send-email');
 
 const typingWords = ['Frontend Developer.', 'Full Stack Learner.', 'Creative Designer.', 'UI/UX Enthusiast.'];
 let typingIndex = 0;
@@ -50,75 +50,32 @@ function toggleMenu() {
     navLinks.classList.toggle('active');
 }
 
-function createProjectEntry(title, link, file) {
-    const projectItem = document.createElement('div');
-    projectItem.className = 'project-item';
-
-    const icon = document.createElement('i');
-    icon.className = `fas ${link ? 'fa-link' : 'fa-file-upload'} project-item-icon`;
-
-    const content = document.createElement('div');
-    content.className = 'project-item-content';
-
-    const titleEl = document.createElement('h4');
-    titleEl.textContent = title;
-    content.appendChild(titleEl);
-
-    if (link) {
-        const linkEl = document.createElement('a');
-        linkEl.href = link.startsWith('http') ? link : `https://${link}`;
-        linkEl.target = '_blank';
-        linkEl.rel = 'noreferrer';
-        linkEl.textContent = link;
-        content.appendChild(linkEl);
-    }
-
-    if (file) {
-        const fileEl = document.createElement('span');
-        fileEl.textContent = `Uploaded file: ${file.name}`;
-        content.appendChild(fileEl);
-    }
-
-    const removeBtn = document.createElement('button');
-    removeBtn.className = 'remove-btn';
-    removeBtn.type = 'button';
-    removeBtn.innerHTML = '<i class="fas fa-trash"></i> Remove';
-    removeBtn.addEventListener('click', () => projectItem.remove());
-
-    projectItem.append(icon, content, removeBtn);
-    return projectItem;
+function toggleProjectForm() {
+    projectForm.classList.toggle('hidden');
+    projectForm.classList.toggle('visible');
+    addProjectButton.innerHTML = projectForm.classList.contains('visible')
+        ? '<i class="fas fa-minus"></i> Close Form'
+        : '<i class="fas fa-plus"></i> Add Project';
 }
 
-function handleUploadAction() {
+function handleSendEmail() {
     const projectName = document.getElementById('project-name').value.trim();
     const projectLink = document.getElementById('project-link').value.trim();
-    const projectFile = fileInput.files[0];
 
-    if (!projectName && !projectLink && !projectFile) {
-        alert('Please add a project title, link, or upload a file.');
+    if (!projectName && !projectLink) {
+        alert('Please add a project title or a project link.');
         return;
     }
 
-    const projectTitle = projectName || (projectFile ? projectFile.name.replace(/\.[^/.]+$/, '') : projectLink);
-    const projectEntry = createProjectEntry(projectTitle, projectLink, projectFile);
-    projectList.appendChild(projectEntry);
-
-    const uploadMessage = document.createElement('div');
-    uploadMessage.className = 'upload-success';
-    uploadMessage.textContent = `Project "${projectTitle}" is ready to share!`;
-    projectCard.appendChild(uploadMessage);
-
-    setTimeout(() => {
-        uploadMessage.remove();
-    }, 3200);
-
-    document.getElementById('project-name').value = '';
-    document.getElementById('project-link').value = '';
-    fileInput.value = '';
+    const title = projectName || 'New Project';
+    const subject = encodeURIComponent(`Project Submission: ${title}`);
+    const body = encodeURIComponent(`Hello,%0D%0A%0D%0AI would like to share a project with you.%0D%0A%0D%0AProject Title: ${title}%0D%0AProject Link: ${projectLink || 'N/A'}%0D%0A%0D%0APlease review this project and let me know your thoughts.%0D%0A%0D%0AThanks!`);
+    window.location.href = `mailto:khanebad732@gmail.com?subject=${subject}&body=${body}`;
 }
 
 menuBtn?.addEventListener('click', toggleMenu);
-uploadButton?.addEventListener('click', handleUploadAction);
+addProjectButton?.addEventListener('click', toggleProjectForm);
+sendEmailButton?.addEventListener('click', handleSendEmail);
 window.addEventListener('scroll', () => {
     revealOnScroll();
     document.querySelector('header')?.classList.toggle('scrolled', window.scrollY > 20);
@@ -129,3 +86,4 @@ window.addEventListener('load', () => {
     revealOnScroll();
     document.querySelector('header')?.classList.toggle('scrolled', window.scrollY > 20);
 });
+
