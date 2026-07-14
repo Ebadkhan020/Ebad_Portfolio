@@ -177,27 +177,19 @@ I enjoy creating attractive, responsive and user-friendly websites with modern U
 
 <h3>Upload Your Project</h3>
 
-<p>Share your latest work with a quick upload or project link. This form helps you present your project in a clean, modern portfolio layout.</p>
+<p>Share your project idea with me. Click + to open the quick project form and send your details by email.</p>
 
-<form class="upload-form">
+<button class="btn btn-add-project" type="button"><i class="fas fa-plus"></i> Add Project</button>
+
+<form class="upload-form project-form hidden">
 <label for="project-name">Project Title</label>
 <input type="text" id="project-name" placeholder="Enter project title">
 
 <label for="project-link">Project Link</label>
 <input type="url" id="project-link" placeholder="https://example.com">
 
-<label class="file-upload" for="project-file">
-<input type="file" id="project-file" accept=".zip,.pdf,.html,.css,.js,.png,.jpg,.jpeg">
-Choose project file
-</label>
-
-<button class="btn" type="button"><i class="fas fa-cloud-upload-alt"></i> Upload Project</button>
+<button class="btn btn-send-email" type="button"><i class="fas fa-paper-plane"></i> Send by Email</button>
 </form>
-
-<div class="uploaded-projects">
-    <h4>Uploaded Projects</h4>
-    <div class="project-list"></div>
-</div>
 
 </div>
 
