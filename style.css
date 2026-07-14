@@ -414,6 +414,22 @@ header.scrolled {
 .upload-form {
     display: grid;
     gap: 18px;
+    overflow: hidden;
+    transition: max-height 0.45s ease, opacity 0.45s ease, transform 0.45s ease;
+}
+
+.upload-form.hidden {
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+}
+
+.upload-form.visible {
+    max-height: 420px;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
 }
 
 .upload-form label {
@@ -434,6 +450,15 @@ header.scrolled {
 .upload-form input[type="text"]::placeholder,
 .upload-form input[type="url"]::placeholder {
     color: rgba(87, 95, 114, 0.55);
+}
+
+.btn-add-project {
+    width: fit-content;
+    gap: 10px;
+}
+
+.btn-send-email {
+    width: 100%;
 }
 
 .file-upload {
